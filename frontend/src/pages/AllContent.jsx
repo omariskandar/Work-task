@@ -1,8 +1,20 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { contentAPI } from '../services/api';
 import ContentCard from '../components/ContentCard';
 import Loading from '../components/Loading';
+import Input from '../components/ui/input';
+import Select from '../components/ui/select';
+import Button from '../components/ui/button';
+import Badge from '../components/ui/badge';
 import toast from 'react-hot-toast';
+
+const filterOptions = [
+  { label: 'All Types', value: 'all' },
+  { label: 'Video', value: 'video' },
+  { label: 'Lecture', value: 'lecture' },
+  { label: 'PDF', value: 'pdf' }
+];
 
 const AllContent = () => {
   const [contents, setContents] = useState([]);
@@ -19,10 +31,9 @@ const AllContent = () => {
       setLoading(true);
       const data = await contentAPI.getAllContent();
       setContents(data);
-      toast.success('Content loaded successfully!');
     } catch (error) {
       console.error('Error fetching contents:', error);
-      toast.error('Failed to load content. Please try again.');
+      toast.error('Unable to reach the library right now.');
     } finally {
       setLoading(false);
     }
@@ -31,23 +42,25 @@ const AllContent = () => {
   const handleDelete = async (id) => {
     try {
       await contentAPI.deleteContent(id);
-      setContents(contents.filter((content) => content.id !== id));
-      toast.success('Content deleted successfully!');
+      setContents((prev) => prev.filter((content) => content.id !== id));
+      toast.success('Entry removed');
     } catch (error) {
       console.error('Error deleting content:', error);
       toast.error('Failed to delete content. Please try again.');
     }
   };
 
-  // Filter contents based on search and type
   const filteredContents = contents.filter((content) => {
+    const term = searchTerm.trim().toLowerCase();
     const matchesSearch =
-      content.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      content.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      content.author?.toLowerCase().includes(searchTerm.toLowerCase());
+      !term ||
+      content.title?.toLowerCase().includes(term) ||
+      content.description?.toLowerCase().includes(term) ||
+      content.author?.toLowerCase().includes(term);
 
     const matchesType =
-      filterType === 'all' || content.type?.toLowerCase() === filterType.toLowerCase();
+      filterType === 'all' ||
+      content.type?.toLowerCase() === filterType.toLowerCase();
 
     return matchesSearch && matchesType;
   });
@@ -57,95 +70,97 @@ const AllContent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">All Content</h1>
-          <p className="text-gray-600">Browse and manage your content library</p>
-        </div>
+    <div className="relative min-h-screen pb-16 text-white">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute left-20 top-10 h-60 w-60 rounded-full bg-cyan-400/30 blur-[120px]" />
+        <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-amber-300/20 blur-[140px]" />
+      </div>
+      <div className="mx-auto w-full max-w-6xl px-6 py-12">
+        <section className="rounded-[36px] border border-white/10 bg-gradient-to-br from-slate-900/90 via-slate-900/40 to-slate-900/20 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.45)]">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="space-y-4">
+              <Badge className="bg-white/10 text-white/70">Dashboard</Badge>
+              <div>
+                <h1 className="text-4xl font-semibold tracking-tight text-white">
+                  Content Command Center
+                </h1>
+                <p className="mt-3 max-w-2xl text-lg text-white/70">
+                  Create, edit, and publish your knowledge
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-4 text-sm text-white/60">
+                <span className="rounded-2xl border border-white/10 px-4 py-2">
+                  Total records: {contents.length}
+                </span>
+                <span className="rounded-2xl border border-white/10 px-4 py-2">
+                  Showing: {filteredContents.length}
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button variant="secondary" className="flex-1" onClick={fetchContents}>
+                Refresh
+              </Button>
+              {/* <Link to="/add" className="flex-1">
+                <Button className="w-full">Add new content</Button>
+              </Link> */}
+            </div>
+          </div>
+        </section>
 
-        {/* Search and Filter */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Search Bar */}
+        <section className="mt-10 rounded-[28px] border border-white/5 bg-white/5 p-6 backdrop-blur-2xl">
+          <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label
-                htmlFor="search"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Search
+              <label className="mb-2 block text-sm font-medium text-white/70">
+                Search the library
               </label>
-              <input
-                type="text"
-                id="search"
-                placeholder="Search by title, description, or author..."
+              <Input
+                placeholder="Try “Next.js”, “Motion design”, or an author..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
-
-            {/* Filter by Type */}
             <div>
-              <label
-                htmlFor="filter"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Filter by Type
+              <label className="mb-2 block text-sm font-medium text-white/70">
+                Content type
               </label>
-              <select
-                id="filter"
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="all">All Types</option>
-                <option value="video">Video</option>
-                <option value="lecture">Lecture</option>
-                <option value="pdf">PDF</option>
-              </select>
+              <Select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+                {filterOptions.map((option) => (
+                  <option key={option.value} value={option.value} className="text-slate-900">
+                    {option.label}
+                  </option>
+                ))}
+              </Select>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Results Count */}
-        <div className="mb-4">
-          <p className="text-gray-600">
-            Showing {filteredContents.length} of {contents.length} items
-          </p>
-        </div>
-
-        {/* Content Grid */}
-        {filteredContents.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-12 text-center">
-            <div className="text-6xl mb-4">📭</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-2">
-              No content found
-            </h3>
-            <p className="text-gray-600 mb-6">
-              {searchTerm || filterType !== 'all'
-                ? 'Try adjusting your search or filter criteria'
-                : 'Start by adding your first content item'}
-            </p>
-            <a
-              href="/add"
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-md transition-colors duration-200 font-medium"
-            >
-              Add Content
-            </a>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredContents.map((content) => (
-              <ContentCard
-                key={content.id}
-                content={content}
-                onDelete={handleDelete}
-              />
-            ))}
-          </div>
-        )}
+        <section className="mt-8">
+          {filteredContents.length === 0 ? (
+            <div className="rounded-[32px] border border-dashed border-white/20 bg-white/5 p-12 text-center backdrop-blur-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.6em] text-white/30">
+                Empty state
+              </p>
+              <h3 className="mt-4 text-2xl font-semibold text-white">
+                Nothing matches your filters
+              </h3>
+              <p className="mt-2 text-white/60">
+                {searchTerm || filterType !== 'all'
+                  ? 'Try resetting the search or switching the type filter.'
+                  : 'Start by creating your first resource.'}
+              </p>
+              <Link to="/add">
+                <Button className="mt-6">Create your first entry</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2">
+              {filteredContents.map((content) => (
+                <ContentCard key={content.id} content={content} onDelete={handleDelete} />
+              ))}
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );

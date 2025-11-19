@@ -10,9 +10,10 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
+      <div className="relative flex min-h-screen flex-col bg-transparent text-white">
+        <div className="noise" aria-hidden="true" />
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-1">
           <Routes>
             <Route path="/" element={<AllContent />} />
             <Route path="/add" element={<AddContent />} />
@@ -25,23 +26,26 @@ function App() {
           toastOptions={{
             duration: 3000,
             style: {
-              background: '#363636',
+              background: '#0f172a',
               color: '#fff',
+              borderRadius: '999px',
+              padding: '12px 16px',
+              border: '1px solid rgba(255,255,255,0.12)'
             },
             success: {
               duration: 3000,
               iconTheme: {
-                primary: '#4ade80',
-                secondary: '#fff',
-              },
+                primary: '#22d3ee',
+                secondary: '#030712'
+              }
             },
             error: {
               duration: 4000,
               iconTheme: {
-                primary: '#ef4444',
-                secondary: '#fff',
-              },
-            },
+                primary: '#f472b6',
+                secondary: '#030712'
+              }
+            }
           }}
         />
       </div>
@@ -50,4 +54,3 @@ function App() {
 }
 
 export default App;
-

@@ -1,250 +1,205 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { contentAPI } from '../services/api';
+import Input from '../components/ui/input';
+import Textarea from '../components/ui/textarea';
+import Select from '../components/ui/select';
+import Label from '../components/ui/label';
+import Button from '../components/ui/button';
+import {
+  Card,
+  CardInner,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent
+} from '../components/ui/card';
 import toast from 'react-hot-toast';
+
+const defaultPayload = {
+  title: '',
+  author: '',
+  description: '',
+  type: 'Video',
+  url: ''
+};
 
 const AddContent = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    title: '',
-    author: '',
-    description: '',
-    type: 'Video',
-    url: '',
-  });
-
+  const [formData, setFormData] = useState(defaultPayload);
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Clear error for this field when user starts typing
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: '',
-      }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
-  const validateForm = () => {
-    const newErrors = {};
+  const validate = () => {
+    const nextErrors = {};
 
-    if (!formData.title.trim()) {
-      newErrors.title = 'Title is required';
+    if (!formData.title.trim()) nextErrors.title = 'Title is required';
+    if (!formData.author.trim()) nextErrors.author = 'Author is required';
+    if (!formData.description.trim()) nextErrors.description = 'Description is required';
+    if (!formData.type) nextErrors.type = 'Please pick a content type';
+    if (!formData.url.trim()) nextErrors.url = 'URL is required';
+    else if (!/^https?:\/\/.+/i.test(formData.url)) {
+      nextErrors.url = 'URL must start with http:// or https://';
     }
 
-    if (!formData.author.trim()) {
-      newErrors.author = 'Author is required';
-    }
-
-    if (!formData.description.trim()) {
-      newErrors.description = 'Description is required';
-    }
-
-    if (!formData.type) {
-      newErrors.type = 'Content type is required';
-    }
-
-    if (!formData.url.trim()) {
-      newErrors.url = 'URL is required';
-    } else if (!/^https?:\/\/.+/.test(formData.url)) {
-      newErrors.url = 'Please enter a valid URL (must start with http:// or https://)';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      toast.error('Please fix the errors in the form');
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!validate()) {
+      toast.error('Please resolve the highlighted fields');
       return;
     }
 
     try {
       setLoading(true);
       await contentAPI.createContent(formData);
-      toast.success('Content added successfully!');
+      toast.success('Content published');
       navigate('/');
     } catch (error) {
       console.error('Error adding content:', error);
-      toast.error('Failed to add content. Please try again.');
+      toast.error('Something broke. Try again in a moment.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleReset = () => {
-    setFormData({
-      title: '',
-      author: '',
-      description: '',
-      type: 'Video',
-      url: '',
-    });
+    setFormData(defaultPayload);
     setErrors({});
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Add New Content</h1>
-          <p className="text-gray-600">Fill in the details to add a new content item</p>
+    <div className="relative min-h-screen pb-16 text-white">
+      <div className="mx-auto w-full max-w-5xl px-6 py-12">
+        <div className="mb-10 space-y-4">
+          <Link to="/" className="text-sm text-white/60 hover:text-white">
+            ← Back to library
+          </Link>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/50">
+              Create
+            </p>
+            <h1 className="mt-2 text-4xl font-semibold tracking-tight">
+              Ship something beautiful
+            </h1>
+          </div>
         </div>
 
-        {/* Form */}
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Title */}
-            <div>
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Title <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                placeholder="Enter content title"
-                className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errors.title ? 'border-red-500' : 'border-gray-300'
-                }`}
-              />
-              {errors.title && (
-                <p className="mt-1 text-sm text-red-600">{errors.title}</p>
-              )}
-            </div>
+        <Card>
+          <CardInner>
+            <CardHeader>
+              <CardTitle>Content details</CardTitle>
+              <CardDescription>
+                Provide the metadata that helps teammates find and trust this resource.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div>
+                    <Label htmlFor="title">Title</Label>
+                    <Input
+                      id="title"
+                      name="title"
+                      placeholder="Designing thoughtful onboarding journeys"
+                      value={formData.title}
+                      onChange={handleChange}
+                    />
+                    {errors.title && (
+                      <p className="mt-2 text-sm text-rose-300">{errors.title}</p>
+                    )}
+                  </div>
+                  <div>
+                    <Label htmlFor="author">Author</Label>
+                    <Input
+                      id="author"
+                      name="author"
+                      placeholder="Who created this?"
+                      value={formData.author}
+                      onChange={handleChange}
+                    />
+                    {errors.author && (
+                      <p className="mt-2 text-sm text-rose-300">{errors.author}</p>
+                    )}
+                  </div>
+                </div>
 
-            {/* Author */}
-            <div>
-              <label
-                htmlFor="author"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Author <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="author"
-                name="author"
-                value={formData.author}
-                onChange={handleChange}
-                placeholder="Enter author name"
-                className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errors.author ? 'border-red-500' : 'border-gray-300'
-                }`}
-              />
-              {errors.author && (
-                <p className="mt-1 text-sm text-red-600">{errors.author}</p>
-              )}
-            </div>
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    name="description"
+                    rows={4}
+                    placeholder="Share the context, insights, or why this piece matters."
+                    value={formData.description}
+                    onChange={handleChange}
+                  />
+                  {errors.description && (
+                    <p className="mt-2 text-sm text-rose-300">{errors.description}</p>
+                  )}
+                </div>
 
-            {/* Description */}
-            <div>
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Description <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Enter content description"
-                rows="4"
-                className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errors.description ? 'border-red-500' : 'border-gray-300'
-                }`}
-              ></textarea>
-              {errors.description && (
-                <p className="mt-1 text-sm text-red-600">{errors.description}</p>
-              )}
-            </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div>
+                    <Label htmlFor="type">Content type</Label>
+                    <Select id="type" name="type" value={formData.type} onChange={handleChange}>
+                      <option value="Video" className="text-slate-900">
+                        Video
+                      </option>
+                      <option value="Lecture" className="text-slate-900">
+                        Lecture
+                      </option>
+                      <option value="PDF" className="text-slate-900">
+                        PDF
+                      </option>
+                    </Select>
+                    {errors.type && (
+                      <p className="mt-2 text-sm text-rose-300">{errors.type}</p>
+                    )}
+                  </div>
+                  <div>
+                    <Label htmlFor="url">Resource URL</Label>
+                    <Input
+                      id="url"
+                      name="url"
+                      placeholder="https://"
+                      value={formData.url}
+                      onChange={handleChange}
+                    />
+                    {errors.url && (
+                      <p className="mt-2 text-sm text-rose-300">{errors.url}</p>
+                    )}
+                  </div>
+                </div>
 
-            {/* Type */}
-            <div>
-              <label
-                htmlFor="type"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Content Type <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="type"
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errors.type ? 'border-red-500' : 'border-gray-300'
-                }`}
-              >
-                <option value="Video">🎥 Video</option>
-                <option value="Lecture">🎓 Lecture</option>
-                <option value="PDF">📄 PDF</option>
-              </select>
-              {errors.type && (
-                <p className="mt-1 text-sm text-red-600">{errors.type}</p>
-              )}
-            </div>
-
-            {/* URL */}
-            <div>
-              <label
-                htmlFor="url"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                URL <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="url"
-                id="url"
-                name="url"
-                value={formData.url}
-                onChange={handleChange}
-                placeholder="https://example.com/content"
-                className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  errors.url ? 'border-red-500' : 'border-gray-300'
-                }`}
-              />
-              {errors.url && (
-                <p className="mt-1 text-sm text-red-600">{errors.url}</p>
-              )}
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-4 pt-4">
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-md transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Adding...' : '✅ Add Content'}
-              </button>
-              <button
-                type="button"
-                onClick={handleReset}
-                className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 px-6 rounded-md transition-colors duration-200 font-medium"
-              >
-                🔄 Reset
-              </button>
-            </div>
-          </form>
-        </div>
+                <div className="flex flex-col gap-3 pt-4 md:flex-row">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="border border-white/10 text-white"
+                    onClick={handleReset}
+                  >
+                    Reset
+                  </Button>
+                  <Button type="submit" disabled={loading} className="flex-1">
+                    {loading ? 'Saving...' : 'Publish entry'}
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </CardInner>
+        </Card>
       </div>
     </div>
   );
