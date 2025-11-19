@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -14,11 +15,7 @@ function App() {
         <div className="noise" aria-hidden="true" />
         <Navbar />
         <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<AllContent />} />
-            <Route path="/add" element={<AddContent />} />
-            <Route path="/edit/:id" element={<EditContent />} />
-          </Routes>
+          <AnimatedRoutes />
         </main>
         <Footer />
         <Toaster
@@ -52,5 +49,37 @@ function App() {
     </Router>
   );
 }
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const [transitionStage, setTransitionStage] = useState('fadeIn');
+
+  useEffect(() => {
+    if (location !== displayLocation) {
+      setTransitionStage('fadeOut');
+    }
+  }, [location, displayLocation]);
+
+  const handleAnimationEnd = () => {
+    if (transitionStage === 'fadeOut') {
+      setTransitionStage('fadeIn');
+      setDisplayLocation(location);
+    }
+  };
+
+  return (
+    <div
+      className={`page-transition ${transitionStage}`}
+      onAnimationEnd={handleAnimationEnd}
+    >
+      <Routes location={displayLocation}>
+        <Route path="/" element={<AllContent />} />
+        <Route path="/add" element={<AddContent />} />
+        <Route path="/edit/:id" element={<EditContent />} />
+      </Routes>
+    </div>
+  );
+};
 
 export default App;
