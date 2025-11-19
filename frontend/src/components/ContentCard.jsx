@@ -64,7 +64,20 @@ const ContentCard = ({ content, onDelete }) => {
                 {config.label.slice(0, 2)}
               </div>
               <div>
-                <CardTitle className="text-2xl leading-tight">{content.title}</CardTitle>
+                <CardTitle className="text-2xl leading-tight">
+                  {content.url ? (
+                    <a
+                      href={content.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white transition hover:text-cyan-200"
+                    >
+                      {content.title}
+                    </a>
+                  ) : (
+                    content.title
+                  )}
+                </CardTitle>
                 <CardDescription className="text-xs uppercase tracking-[0.3em] text-white/40">
                   {content.author || 'Unknown Author'}
                 </CardDescription>

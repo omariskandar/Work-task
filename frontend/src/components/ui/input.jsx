@@ -3,15 +3,18 @@ import { cn } from '../../utils/cn';
 
 const Input = forwardRef(({ className, type = 'text', ...props }, ref) => {
   return (
-    <input
-      ref={ref}
-      type={type}
-      className={cn(
-        'flex h-11 w-full rounded-xl border border-white/10 bg-white/5 px-4 text-sm text-white placeholder:text-white/60 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] transition-all focus-visible:border-brand focus-visible:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40',
-        className
-      )}
-      {...props}
-    />
+    <div className="relative w-full">
+      <div className="pointer-events-none absolute inset-0 rounded-[18px] bg-gradient-to-r from-cyan-500/25 via-cyan-500/10 to-transparent opacity-60 blur-md" />
+      <input
+        ref={ref}
+        type={type}
+        className={cn(
+          'relative h-12 w-full rounded-[18px] border border-white/12 bg-slate-950/70 px-4 text-sm text-white placeholder:text-white/60 shadow-[0_6px_30px_rgba(2,6,23,0.65)] transition focus-visible:border-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/30',
+          className
+        )}
+        {...props}
+      />
+    </div>
   );
 });
 

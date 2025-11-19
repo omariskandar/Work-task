@@ -4,7 +4,7 @@ import { contentAPI } from '../services/api';
 import ContentCard from '../components/ContentCard';
 import Loading from '../components/Loading';
 import Input from '../components/ui/input';
-import Select from '../components/ui/select';
+import ModernSelect from '../components/ModernSelect';
 import Button from '../components/ui/button';
 import Badge from '../components/ui/badge';
 import toast from 'react-hot-toast';
@@ -120,18 +120,13 @@ const AllContent = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">
-                Content type
-              </label>
-              <Select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-                {filterOptions.map((option) => (
-                  <option key={option.value} value={option.value} className="text-slate-900">
-                    {option.label}
-                  </option>
-                ))}
-              </Select>
-            </div>
+            <ModernSelect
+              label="Content type"
+              value={filterType}
+              onChange={(newValue) => setFilterType(newValue)}
+              options={filterOptions}
+              placeholder="All Types"
+            />
           </div>
         </section>
 

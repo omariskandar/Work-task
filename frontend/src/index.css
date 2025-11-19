@@ -5,12 +5,12 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #030712;
+  background-color: #01030a;
   background-image:
-    radial-gradient(circle at 10% 20%, rgba(14,165,233,0.35), transparent 45%),
-    radial-gradient(circle at 70% 10%, rgba(45,212,191,0.3), transparent 45%),
-    radial-gradient(circle at 90% 30%, rgba(250,204,21,0.25), transparent 45%),
-    linear-gradient(145deg, rgba(15,23,42,0.95), rgba(2,6,23,0.98)),
+    radial-gradient(circle at 10% 20%, rgba(14,165,233,0.2), transparent 45%),
+    radial-gradient(circle at 70% 10%, rgba(45,212,191,0.18), transparent 45%),
+    radial-gradient(circle at 90% 30%, rgba(250,204,21,0.15), transparent 45%),
+    linear-gradient(160deg, rgba(4,7,16,0.98), rgba(1,3,10,0.95)),
     var(--grid);
   color: #f8fafc;
   font-family: 'Inter', 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -25,6 +25,36 @@ body {
 
 #root {
   min-height: 100vh;
+}
+
+html,
+body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(14,165,233,0.6) rgba(2,6,23,0.85);
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+  background: rgba(2,6,23,0.85);
+  border-radius: 999px;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(14,165,233,0.85), rgba(59,130,246,0.85));
+  border-radius: 999px;
+  border: 2px solid rgba(2,6,23,0.85);
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(6,182,212,1), rgba(59,130,246,1));
 }
 
 @keyframes shimmer {
