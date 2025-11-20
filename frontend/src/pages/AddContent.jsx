@@ -198,8 +198,7 @@ const AddContent = () => {
                 <div className="flex flex-col gap-3 pt-4 md:flex-row">
                   <Button
                     type="button"
-                    variant="secondary"
-                    className="border border-[#1C2756] bg-[#1E3264] text-white transition-colors hover:bg-[#142247]"
+                    variant="night"
                     onClick={handleReset}
                   >
                     Reset
@@ -207,7 +206,8 @@ const AddContent = () => {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 border border-[#1C2756] bg-[#1E3264] text-white transition-colors hover:bg-[#142247]"
+                    variant="night"
+                    className="flex-1"
                   >
                     {loading ? 'Saving...' : 'Publish entry'}
                   </Button>

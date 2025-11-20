@@ -11,7 +11,9 @@ const variantClasses = {
   destructive:
     'bg-[#DC2626] text-white hover:bg-[#B91C1C] shadow-sm hover:shadow-md',
   success:
-    'bg-[#22C55E] text-white hover:bg-[#16A34A] shadow-sm hover:shadow-md'
+    'bg-[#22C55E] text-white hover:bg-[#16A34A] shadow-sm hover:shadow-md',
+  night:
+    'border border-[#1C2756] bg-[#1E3264] text-white transition-colors hover:bg-[#142247]'
 };
 
 const sizeClasses = {

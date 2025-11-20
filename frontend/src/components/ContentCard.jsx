@@ -107,9 +107,9 @@ const ContentCard = ({ content, onDelete }) => {
             )}
             <div className="ml-auto flex w-full justify-end gap-2 md:w-auto">
               <Button
-                variant="secondary"
+                variant="night"
                 size="sm"
-                className="flex-1 border border-[#1C2756] bg-[#1E3264] text-white transition-colors hover:bg-[#142247] md:flex-none"
+                className="flex-1 md:flex-none"
                 onClick={() => navigate(`/edit/${content.id}`)}
               >
                 Edit

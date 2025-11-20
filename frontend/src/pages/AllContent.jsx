@@ -94,11 +94,7 @@ const AllContent = () => {
               </div>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Button
-                variant="secondary"
-                className="flex-1 border border-[#1C2756] bg-[#1E3264] text-white transition-colors hover:bg-[#142247]"
-                onClick={fetchContents}
-              >
+              <Button variant="night" className="flex-1" onClick={fetchContents}>
                 Refresh
               </Button>
               {/* <Link to="/add" className="flex-1">
