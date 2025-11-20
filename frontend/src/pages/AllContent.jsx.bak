@@ -94,11 +94,7 @@ const AllContent = () => {
               </div>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Button
-                variant="secondary"
-                className="flex-1 border border-[#1C2756] bg-[#1E3264] text-white transition-colors hover:bg-[#142247]"
-                onClick={fetchContents}
-              >
+              <Button variant="secondary" className="flex-1" onClick={fetchContents}>
                 Refresh
               </Button>
               {/* <Link to="/add" className="flex-1">
@@ -108,10 +104,10 @@ const AllContent = () => {
           </div>
         </section>
 
-        <section className="rounded-xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
-          <div className="grid gap-6 md:grid-cols-2">
+        <section className="rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
+          <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#374151] mb-2">
+              <label className="section-title">
                 Search the library
               </label>
               <Input
@@ -132,27 +128,21 @@ const AllContent = () => {
 
         <section className="mt-8">
           {filteredContents.length === 0 ? (
-            <div className="rounded-xl border-2 border-dashed border-[#E5E7EB] bg-white p-16 text-center shadow-sm">
-              <div className="mx-auto max-w-md space-y-4">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-xl bg-[#F3F4F6]">
-                  <svg className="h-8 w-8 text-[#9CA3AF]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-[#111827]">
-                    Nothing matches your filters
-                  </h3>
-                  <p className="mt-2 text-sm text-[#6B7280]">
-                    {searchTerm || filterType !== 'all'
-                      ? 'Try resetting the search or switching the type filter.'
-                      : 'Start by creating your first resource.'}
-                  </p>
-                </div>
-                <Link to="/add">
-                  <Button className="mt-4">Create your first entry</Button>
-                </Link>
-              </div>
+            <div className="rounded-2xl border border-dashed border-[#E5E7EB] bg-white p-12 text-center shadow-sm">
+              <p className="text-sm font-semibold uppercase tracking-[0.6em] text-[#6B7280]">
+                Empty state
+              </p>
+              <h3 className="mt-4 text-2xl font-semibold text-[#111827]">
+                Nothing matches your filters
+              </h3>
+              <p className="mt-2 text-[#374151]">
+                {searchTerm || filterType !== 'all'
+                  ? 'Try resetting the search or switching the type filter.'
+                  : 'Start by creating your first resource.'}
+              </p>
+              <Link to="/add">
+                <Button className="mt-6">Create your first entry</Button>
+              </Link>
             </div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2">

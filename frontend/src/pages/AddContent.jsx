@@ -88,15 +88,18 @@ const AddContent = () => {
   return (
     <div className="min-h-screen bg-[var(--color-background)] pb-16 text-[#111827]">
       <div className="mx-auto w-full max-w-5xl px-6 py-12">
-        <div className="mb-10 space-y-4">
-          <Link to="/" className="text-sm text-[#6B7280] hover:text-[#111827]">
+        <div className="mb-10 space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6 text-white shadow-lg shadow-black/10 backdrop-blur">
+          <Link
+            to="/"
+            className="text-sm text-white/70 transition-colors hover:text-white"
+          >
             ← Back to library
           </Link>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-[#6B7280]">
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-white/60">
               Create
             </p>
-            <h1 className="mt-2 text-4xl font-semibold tracking-tight">
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-white">
               Ship something beautiful
             </h1>
           </div>
@@ -193,10 +196,19 @@ const AddContent = () => {
                 </div>
 
                 <div className="flex flex-col gap-3 pt-4 md:flex-row">
-                  <Button type="button" variant="secondary" onClick={handleReset}>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    className="border border-[#1C2756] bg-[#1E3264] text-white transition-colors hover:bg-[#142247]"
+                    onClick={handleReset}
+                  >
                     Reset
                   </Button>
-                  <Button type="submit" disabled={loading} className="flex-1">
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="flex-1 border border-[#1C2756] bg-[#1E3264] text-white transition-colors hover:bg-[#142247]"
+                  >
                     {loading ? 'Saving...' : 'Publish entry'}
                   </Button>
                 </div>

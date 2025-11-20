@@ -9,11 +9,11 @@
 }
 
 .page-transition.fadeIn {
-  animation: pageFadeIn 450ms ease forwards;
+  animation: pageFadeIn 400ms ease-out forwards;
 }
 
 .page-transition.fadeOut {
-  animation: pageFadeOut 350ms ease forwards;
+  animation: pageFadeOut 300ms ease-in forwards;
 }
 
 .page-transition::after {
@@ -44,11 +44,11 @@
 }
 
 .page-transition.fadeIn > * {
-  animation: contentSlideIn 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: contentSlideIn 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .page-transition.fadeOut > * {
-  animation: contentSlideOut 350ms ease forwards;
+  animation: contentSlideOut 300ms ease-in forwards;
 }
 
 @keyframes pageFadeIn {
@@ -71,7 +71,7 @@
 
 @keyframes contentSlideIn {
   from {
-    transform: translateY(24px);
+    transform: translateY(16px);
     opacity: 0;
   }
   to {
@@ -86,7 +86,7 @@
     opacity: 1;
   }
   to {
-    transform: translateY(-24px);
+    transform: translateY(-16px);
     opacity: 0;
   }
 }

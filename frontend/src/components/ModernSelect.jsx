@@ -59,22 +59,22 @@ const ModernSelect = ({
       ref={containerRef}
       className={cn('relative w-full', open ? 'z-50' : 'z-10', className)}
     >
-      {label && <p className="section-title">{label}</p>}
+      {label && <p className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#374151] mb-2">{label}</p>}
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         className={cn(
-          'flex h-12 w-full items-center justify-between rounded-lg border border-[#E5E7EB] bg-white px-4 text-sm font-medium text-[#111827] transition',
-          open && 'border-[#3B82F6] ring-2 ring-[#93C5FD]'
+          'flex h-11 w-full items-center justify-between rounded-lg border border-[#E5E7EB] bg-white px-4 text-sm font-medium text-[#111827] transition-all duration-200',
+          open && 'border-[#3B82F6] ring-2 ring-[#BFDBFE]'
         )}
       >
         <span>{activeOption?.label || placeholder}</span>
         <svg
-          className={cn('h-4 w-4 text-[#6B7280] transition-transform', open && 'rotate-180')}
+          className={cn('h-4 w-4 text-[#6B7280] transition-transform duration-200', open && 'rotate-180')}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="1.5"
+          strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
@@ -87,7 +87,7 @@ const ModernSelect = ({
         createPortal(
           <div
             ref={dropdownRef}
-            className="fixed z-[9999] space-y-1 rounded-lg border border-[#E5E7EB] bg-white p-2 shadow-lg"
+            className="fixed z-[9999] space-y-1 rounded-lg border border-[#E5E7EB] bg-white p-1.5 shadow-xl"
             style={{
               top: dropdownRect.top,
               left: dropdownRect.left,
@@ -105,17 +105,17 @@ const ModernSelect = ({
                     setOpen(false);
                   }}
                   className={cn(
-                    'flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium transition',
+                    'flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-medium transition-all duration-150',
                     active
-                      ? 'bg-[#EFF6FF] text-[#1D4ED8] border border-[#DBEAFE]'
-                      : 'text-[#374151] hover:bg-[#F3F4F6]'
+                      ? 'bg-[#EFF6FF] text-[#1E40AF] border border-[#BFDBFE]'
+                      : 'text-[#374151] hover:bg-[#F9FAFB]'
                   )}
                 >
                   <span>{option.label}</span>
                   {active && (
-                    <span className="text-xs uppercase tracking-[0.3em] text-cyan-200">
-                      Active
-                    </span>
+                    <svg className="h-4 w-4 text-[#3B82F6]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
                   )}
                 </button>
               );

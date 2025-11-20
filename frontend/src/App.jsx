@@ -22,11 +22,13 @@ function App() {
           toastOptions={{
             duration: 3000,
             style: {
-              background: '#111827',
+              background: '#0F172A',
               color: '#FFFFFF',
-              borderRadius: '8px',
+              borderRadius: '0.75rem',
               padding: '12px 16px',
-              border: '1px solid #1f2937'
+              border: '1px solid #1F2937',
+              fontSize: '0.875rem',
+              fontWeight: '500'
             },
             success: {
               duration: 3000,
