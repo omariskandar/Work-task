@@ -2,15 +2,16 @@ import { forwardRef } from 'react';
 import { cn } from '../../utils/cn';
 
 const variantClasses = {
-  default:
-    'bg-[#0ea5e9] text-white font-semibold shadow-[0_10px_35px_rgba(14,165,233,0.35)] hover:bg-[#0284c7] hover:shadow-[0_18px_45px_rgba(14,165,233,0.45)] hover:translate-y-[-1px]',
+  default: 'bg-[#3B82F6] text-white hover:bg-[#2563EB]',
   secondary:
-    'bg-white/10 text-white border border-white/10 hover:bg-white/20 hover:text-white',
+    'bg-white text-[#111827] border border-[#E5E7EB] hover:bg-[#F3F4F6]',
   outline:
-    'border border-white/20 bg-transparent text-white hover:bg-white/10',
-  ghost: 'bg-transparent text-white hover:bg-white/10',
+    'border border-[#E5E7EB] bg-transparent text-[#111827] hover:bg-[#F3F4F6]',
+  ghost: 'bg-transparent text-[#374151] hover:bg-[#E5E7EB]',
   destructive:
-    'bg-gradient-to-r from-[#ef4444] to-[#f97316] text-white hover:shadow-[0_10px_30px_rgba(239,68,68,0.45)]'
+    'bg-[#DC2626] text-white hover:bg-[#B91C1C]',
+  success:
+    'bg-[#22C55E] text-white hover:bg-[#16A34A]'
 };
 
 const sizeClasses = {
@@ -25,7 +26,7 @@ const Button = forwardRef(({ className, variant = 'default', size = 'md', ...pro
     <button
       ref={ref}
       className={cn(
-        'inline-flex items-center justify-center rounded-xl font-medium tracking-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030712] disabled:pointer-events-none disabled:opacity-50',
+        'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:pointer-events-none disabled:opacity-60',
         variantClasses[variant],
         sizeClasses[size],
         className

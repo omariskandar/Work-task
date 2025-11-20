@@ -16,18 +16,15 @@ import { cn } from '../utils/cn';
 const typeConfig = {
   video: {
     label: 'Video',
-    accent: 'from-sky-400 to-cyan-400',
-    badge: 'bg-sky-400/10 text-sky-200 border-sky-400/30'
+    badge: 'bg-[#DBEAFE] text-[#1D4ED8]'
   },
   lecture: {
     label: 'Lecture',
-    accent: 'from-emerald-400 to-teal-400',
-    badge: 'bg-emerald-400/10 text-emerald-200 border-emerald-400/30'
+    badge: 'bg-[#DCFCE7] text-[#15803D]'
   },
   pdf: {
     label: 'PDF',
-    accent: 'from-amber-400 to-orange-400',
-    badge: 'bg-amber-400/10 text-amber-100 border-amber-400/30'
+    badge: 'bg-[#FEF3C7] text-[#B45309]'
   }
 };
 
@@ -37,8 +34,7 @@ const ContentCard = ({ content, onDelete }) => {
 
   const config = typeConfig[content.type?.toLowerCase()] || {
     label: content.type || 'Content',
-    accent: 'from-slate-500 to-slate-400',
-    badge: 'bg-white/10 text-white'
+    badge: 'bg-[#E5E7EB] text-[#374151]'
   };
 
   const formattedDate = content.created_at
@@ -51,16 +47,11 @@ const ContentCard = ({ content, onDelete }) => {
 
   return (
     <>
-      <Card className="group relative border-white/5 hover:border-white/20 transition-all duration-300">
+      <Card className="group relative transition-all duration-200 hover:shadow-md">
         <CardInner>
           <CardHeader className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div
-                className={cn(
-                  'flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br text-base font-semibold text-white shadow-inner',
-                  config.accent
-                )}
-              >
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F3F4F6] text-sm font-semibold text-[#111827]">
                 {config.label.slice(0, 2)}
               </div>
               <div>
@@ -70,7 +61,7 @@ const ContentCard = ({ content, onDelete }) => {
                       href={content.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white transition hover:text-cyan-200"
+                      className="text-[#3B82F6] hover:text-[#2563EB]"
                     >
                       {content.title}
                     </a>
@@ -78,36 +69,36 @@ const ContentCard = ({ content, onDelete }) => {
                     content.title
                   )}
                 </CardTitle>
-                <CardDescription className="text-xs uppercase tracking-[0.3em] text-white/40">
+                <CardDescription className="text-xs uppercase tracking-[0.3em] text-[#6B7280]">
                   {content.author || 'Unknown Author'}
                 </CardDescription>
               </div>
             </div>
-            <Badge className={cn('border text-xs', config.badge)}>{config.label}</Badge>
+            <Badge className={cn('text-xs', config.badge)}>{config.label}</Badge>
           </CardHeader>
 
-          <CardContent className="text-base leading-relaxed text-white/80">
+          <CardContent className="text-base leading-relaxed text-[#374151]">
             <p className="line-clamp-3">{content.description}</p>
             {content.url && (
               <a
                 href={content.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center text-sm font-medium text-white/70 underline underline-offset-4 hover:text-white"
+                className="mt-4 inline-flex items-center text-sm font-medium text-[#3B82F6] underline underline-offset-4 hover:text-[#2563EB]"
               >
                 Visit resource →
               </a>
             )}
           </CardContent>
 
-          <CardFooter className="mt-8 flex flex-wrap gap-3 text-xs text-white/60">
+          <CardFooter className="mt-6 flex flex-wrap gap-3 text-xs text-[#6B7280]">
             {formattedDate && (
-              <span className="rounded-full border border-white/10 px-4 py-2">
+              <span className="rounded-full border border-[#E5E7EB] px-4 py-1">
                 Created {formattedDate}
               </span>
             )}
             {content.uploadedFile && (
-              <span className="rounded-full border border-white/10 px-4 py-2">
+              <span className="rounded-full border border-[#E5E7EB] px-4 py-1">
                 Attachment: {content.uploadedFile}
               </span>
             )}
@@ -129,25 +120,20 @@ const ContentCard = ({ content, onDelete }) => {
             </div>
           </CardFooter>
         </CardInner>
-        <div className="pointer-events-none absolute inset-0 rounded-[inherit] border border-white/0 transition group-hover:border-white/30" />
       </Card>
 
       {confirming && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-6 py-12 backdrop-blur-md">
-          <div className="w-full max-w-md rounded-3xl border border-white/10 bg-[#030712]/90 p-8 text-white shadow-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.4em] text-rose-300/70">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-6 py-12">
+          <div className="w-full max-w-md rounded-2xl border border-[#E5E7EB] bg-white p-8 text-[#111827] shadow-lg">
+            <p className="text-sm font-semibold uppercase tracking-[0.4em] text-[#DC2626]">
               Danger zone
             </p>
             <h2 className="mt-4 text-2xl font-semibold">Delete "{content.title}"?</h2>
-            <p className="mt-2 text-sm text-white/70">
+            <p className="mt-2 text-sm text-[#374151]">
               This action is permanent. Please confirm you want to remove this asset from your workspace.
             </p>
             <div className="mt-8 flex flex-col gap-3 md:flex-row">
-              <Button
-                variant="ghost"
-                className="border border-white/10 text-white"
-                onClick={() => setConfirming(false)}
-              >
+              <Button variant="outline" onClick={() => setConfirming(false)}>
                 Cancel
               </Button>
               <Button

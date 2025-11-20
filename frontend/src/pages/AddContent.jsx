@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { contentAPI } from '../services/api';
 import Input from '../components/ui/input';
 import Textarea from '../components/ui/textarea';
-import Select from '../components/ui/select';
+import ModernSelect from '../components/ModernSelect';
 import Label from '../components/ui/label';
 import Button from '../components/ui/button';
 import {
@@ -23,6 +23,12 @@ const defaultPayload = {
   type: 'Video',
   url: ''
 };
+
+const contentTypeOptions = [
+  { label: 'Video', value: 'Video' },
+  { label: 'Lecture', value: 'Lecture' },
+  { label: 'PDF', value: 'PDF' }
+];
 
 const AddContent = () => {
   const navigate = useNavigate();
@@ -80,14 +86,14 @@ const AddContent = () => {
   };
 
   return (
-    <div className="relative min-h-screen pb-16 text-white">
+    <div className="min-h-screen bg-[var(--color-background)] pb-16 text-[#111827]">
       <div className="mx-auto w-full max-w-5xl px-6 py-12">
         <div className="mb-10 space-y-4">
-          <Link to="/" className="text-sm text-white/60 hover:text-white">
+          <Link to="/" className="text-sm text-[#6B7280] hover:text-[#111827]">
             ← Back to library
           </Link>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/50">
+            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-[#6B7280]">
               Create
             </p>
             <h1 className="mt-2 text-4xl font-semibold tracking-tight">
@@ -117,7 +123,7 @@ const AddContent = () => {
                       onChange={handleChange}
                     />
                     {errors.title && (
-                      <p className="mt-2 text-sm text-rose-300">{errors.title}</p>
+                      <p className="mt-2 text-sm text-[#DC2626]">{errors.title}</p>
                     )}
                   </div>
                   <div>
@@ -130,7 +136,7 @@ const AddContent = () => {
                       onChange={handleChange}
                     />
                     {errors.author && (
-                      <p className="mt-2 text-sm text-rose-300">{errors.author}</p>
+                      <p className="mt-2 text-sm text-[#DC2626]">{errors.author}</p>
                     )}
                   </div>
                 </div>
@@ -146,26 +152,26 @@ const AddContent = () => {
                     onChange={handleChange}
                   />
                   {errors.description && (
-                    <p className="mt-2 text-sm text-rose-300">{errors.description}</p>
+                    <p className="mt-2 text-sm text-[#DC2626]">{errors.description}</p>
                   )}
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
                   <div>
-                    <Label htmlFor="type">Content type</Label>
-                    <Select id="type" name="type" value={formData.type} onChange={handleChange}>
-                      <option value="Video" className="text-slate-900">
-                        Video
-                      </option>
-                      <option value="Lecture" className="text-slate-900">
-                        Lecture
-                      </option>
-                      <option value="PDF" className="text-slate-900">
-                        PDF
-                      </option>
-                    </Select>
+                    <Label>Content type</Label>
+                    <ModernSelect
+                      value={formData.type}
+                      options={contentTypeOptions}
+                      onChange={(type) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          type
+                        }))
+                      }
+                      placeholder="Select type"
+                    />
                     {errors.type && (
-                      <p className="mt-2 text-sm text-rose-300">{errors.type}</p>
+                      <p className="mt-2 text-sm text-[#DC2626]">{errors.type}</p>
                     )}
                   </div>
                   <div>
@@ -178,18 +184,13 @@ const AddContent = () => {
                       onChange={handleChange}
                     />
                     {errors.url && (
-                      <p className="mt-2 text-sm text-rose-300">{errors.url}</p>
+                      <p className="mt-2 text-sm text-[#DC2626]">{errors.url}</p>
                     )}
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-3 pt-4 md:flex-row">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="border border-white/10 text-white"
-                    onClick={handleReset}
-                  >
+                  <Button type="button" variant="secondary" onClick={handleReset}>
                     Reset
                   </Button>
                   <Button type="submit" disabled={loading} className="flex-1">

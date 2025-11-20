@@ -2,7 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '../utils/cn';
 
-const ModernSelect = ({ label, value, onChange, options = [], placeholder = 'Select option' }) => {
+const ModernSelect = ({
+  label,
+  value,
+  onChange,
+  options = [],
+  placeholder = 'Select option',
+  className
+}) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
   const [dropdownRect, setDropdownRect] = useState(null);
@@ -47,24 +54,20 @@ const ModernSelect = ({ label, value, onChange, options = [], placeholder = 'Sel
   return (
     <div
       ref={containerRef}
-      className={cn('relative', open ? 'z-50' : 'z-10')}
+      className={cn('relative w-full', open ? 'z-50' : 'z-10', className)}
     >
-      {label && (
-        <p className="mb-2 text-sm font-medium text-white/70 uppercase tracking-[0.25em]">
-          {label}
-        </p>
-      )}
+      {label && <p className="section-title">{label}</p>}
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         className={cn(
-          'flex h-12 w-full items-center justify-between rounded-2xl border border-white/15 bg-white/5 px-4 text-sm font-medium text-white transition-all',
-          open && 'border-cyan-300/70 bg-white/10 shadow-[0_12px_40px_rgba(6,182,212,0.35)]'
+          'flex h-12 w-full items-center justify-between rounded-lg border border-[#E5E7EB] bg-white px-4 text-sm font-medium text-[#111827] transition',
+          open && 'border-[#3B82F6] ring-2 ring-[#93C5FD]'
         )}
       >
         <span>{activeOption?.label || placeholder}</span>
         <svg
-          className={cn('h-4 w-4 text-white/70 transition-transform', open && 'rotate-180')}
+          className={cn('h-4 w-4 text-[#6B7280] transition-transform', open && 'rotate-180')}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -80,7 +83,7 @@ const ModernSelect = ({ label, value, onChange, options = [], placeholder = 'Sel
         dropdownRect &&
         createPortal(
           <div
-            className="fixed z-[9999] space-y-1 rounded-3xl border border-white/10 bg-[#050b18]/95 p-2 shadow-[0_20px_70px_rgba(2,6,23,0.9)] backdrop-blur-2xl"
+            className="fixed z-[9999] space-y-1 rounded-lg border border-[#E5E7EB] bg-white p-2 shadow-lg"
             style={{
               top: dropdownRect.top,
               left: dropdownRect.left,
@@ -98,10 +101,10 @@ const ModernSelect = ({ label, value, onChange, options = [], placeholder = 'Sel
                     setOpen(false);
                   }}
                   className={cn(
-                    'flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-medium transition',
+                    'flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium transition',
                     active
-                      ? 'bg-white/10 text-white border border-white/15'
-                      : 'text-white/70 hover:bg-white/5 hover:text-white'
+                      ? 'bg-[#EFF6FF] text-[#1D4ED8] border border-[#DBEAFE]'
+                      : 'text-[#374151] hover:bg-[#F3F4F6]'
                   )}
                 >
                   <span>{option.label}</span>

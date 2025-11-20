@@ -70,29 +70,25 @@ const AllContent = () => {
   }
 
   return (
-    <div className="relative min-h-screen pb-16 text-white">
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-20 top-10 h-60 w-60 rounded-full bg-cyan-400/30 blur-[120px]" />
-        <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-amber-300/20 blur-[140px]" />
-      </div>
-      <div className="mx-auto w-full max-w-6xl px-6 py-12">
-        <section className="rounded-[36px] border border-white/10 bg-gradient-to-br from-slate-900/90 via-slate-900/40 to-slate-900/20 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.45)]">
+    <div className="min-h-screen bg-[var(--color-background)] pb-16 text-[#111827]">
+      <div className="mx-auto w-full max-w-6xl px-6 py-12 space-y-8">
+        <section className="rounded-2xl border border-[#E5E7EB] bg-white p-8 shadow-sm">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="space-y-4">
-              <Badge className="bg-white/10 text-white/70">Dashboard</Badge>
+              <Badge>Dashboard</Badge>
               <div>
-                <h1 className="text-4xl font-semibold tracking-tight text-white">
+                <h1 className="text-3xl font-semibold text-[#111827]">
                   Content Command Center
                 </h1>
-                <p className="mt-3 max-w-2xl text-lg text-white/70">
-                  Create, edit, and publish your knowledge
+                <p className="mt-2 max-w-2xl text-base text-[#374151]">
+                  Create, edit, and publish your knowledge base with clarity.
                 </p>
               </div>
-              <div className="flex flex-wrap gap-4 text-sm text-white/60">
-                <span className="rounded-2xl border border-white/10 px-4 py-2">
+              <div className="flex flex-wrap gap-4 text-sm text-[#374151]">
+                <span className="rounded-lg border border-[#E5E7EB] px-4 py-2">
                   Total records: {contents.length}
                 </span>
-                <span className="rounded-2xl border border-white/10 px-4 py-2">
+                <span className="rounded-lg border border-[#E5E7EB] px-4 py-2">
                   Showing: {filteredContents.length}
                 </span>
               </div>
@@ -108,10 +104,10 @@ const AllContent = () => {
           </div>
         </section>
 
-        <section className="mt-10 rounded-[28px] border border-white/5 bg-white/5 p-6 backdrop-blur-2xl">
+        <section className="rounded-2xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm font-medium text-white/70">
+              <label className="section-title">
                 Search the library
               </label>
               <Input
@@ -132,14 +128,14 @@ const AllContent = () => {
 
         <section className="mt-8">
           {filteredContents.length === 0 ? (
-            <div className="rounded-[32px] border border-dashed border-white/20 bg-white/5 p-12 text-center backdrop-blur-2xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.6em] text-white/30">
+            <div className="rounded-2xl border border-dashed border-[#E5E7EB] bg-white p-12 text-center shadow-sm">
+              <p className="text-sm font-semibold uppercase tracking-[0.6em] text-[#6B7280]">
                 Empty state
               </p>
-              <h3 className="mt-4 text-2xl font-semibold text-white">
+              <h3 className="mt-4 text-2xl font-semibold text-[#111827]">
                 Nothing matches your filters
               </h3>
-              <p className="mt-2 text-white/60">
+              <p className="mt-2 text-[#374151]">
                 {searchTerm || filterType !== 'all'
                   ? 'Try resetting the search or switching the type filter.'
                   : 'Start by creating your first resource.'}

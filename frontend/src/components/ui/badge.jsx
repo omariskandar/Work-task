@@ -2,14 +2,10 @@ import { cn } from '../../utils/cn';
 
 const Badge = ({ className, children, variant = 'default', ...props }) => {
   const variantClasses = {
-    default:
-      'bg-white/10 text-white',
-    success:
-      'bg-emerald-400/10 text-emerald-300 border border-emerald-400/20',
-    warning:
-      'bg-amber-400/10 text-amber-200 border border-amber-400/20',
-    danger:
-      'bg-rose-500/10 text-rose-200 border border-rose-500/20'
+    default: 'bg-[#F3F4F6] text-[#374151] border border-[#E5E7EB]',
+    success: 'bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0]',
+    warning: 'bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A]',
+    danger: 'bg-[#FEE2E2] text-[#B91C1C] border border-[#FECACA]'
   };
 
   return (

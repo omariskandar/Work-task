@@ -4,15 +4,14 @@ import { cn } from '../../utils/cn';
 const Select = forwardRef(({ className, children, ...props }, ref) => {
   return (
     <div className={cn('relative w-full', className)}>
-      <div className="pointer-events-none absolute inset-0 rounded-[18px] bg-gradient-to-r from-cyan-500/25 via-cyan-500/10 to-transparent opacity-60 blur-md" />
       <select
         ref={ref}
-        className="relative h-12 w-full appearance-none rounded-[18px] border border-white/12 bg-slate-950/70 px-4 pr-12 text-sm text-white shadow-[0_6px_30px_rgba(2,6,23,0.65)] focus:border-cyan-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/30"
+        className="h-12 w-full appearance-none rounded-lg border border-[#E5E7EB] bg-white px-4 pr-10 text-sm text-[#111827] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#93C5FD]"
         {...props}
       >
         {children}
       </select>
-      <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/70">
+      <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280]">
         <svg
           aria-hidden="true"
           width="16"

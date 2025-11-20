@@ -15,21 +15,21 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/5 bg-[#030712]/80 backdrop-blur-2xl">
+    <header className="sticky top-0 z-40 border-b border-[#E5E7EB] bg-[#111827] text-white">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400/40 to-emerald-400/20 text-base font-semibold text-white">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#3B82F6] text-base font-semibold text-white">
             CM
           </div>
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.4em] text-white/60">
+            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/60">
               Content Manager
             </p>
-            <p className="text-lg font-bold text-white tracking-tight">Workspace</p>
+            <p className="text-lg font-semibold tracking-tight text-white">Workspace</p>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-1 text-sm font-medium text-white/70 shadow-[0_0_20px_rgba(15,23,42,0.2)] md:flex">
+        <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/10 px-2 py-1 text-sm font-medium text-white/80 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -37,8 +37,8 @@ const Navbar = () => {
               className={cn(
                 'rounded-full px-4 py-2 transition-all',
                 isActive(link.path)
-                  ? 'bg-white text-slate-900 shadow-lg shadow-slate-900/40'
-                  : 'hover:bg-white/10'
+                  ? 'bg-white text-[#111827]'
+                  : 'hover:bg-white/20'
               )}
             >
               {link.label}
@@ -46,16 +46,8 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* <div className="hidden md:flex items-center gap-3">
-          <Link to="/add">
-            <Button variant="default" size="sm">
-              New Entry
-            </Button>
-          </Link>
-        </div> */}
-
         <button
-          className="md:hidden rounded-full border border-white/15 bg-white/5 p-2 text-white/80"
+          className="md:hidden rounded-full border border-white/20 bg-white/10 p-2 text-white"
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -69,7 +61,7 @@ const Navbar = () => {
       </div>
 
       {isOpen && (
-        <div className="border-t border-white/5 bg-[#030712]/95 px-6 py-4 md:hidden">
+        <div className="border-t border-white/5 bg-[#111827] px-6 py-4 md:hidden">
           <div className="flex flex-col gap-3">
             {navLinks.map((link) => (
               <Link
@@ -77,16 +69,13 @@ const Navbar = () => {
                 to={link.path}
                 className={cn(
                   'rounded-2xl px-4 py-3 text-white/80 transition-all',
-                  isActive(link.path) ? 'bg-white text-slate-900' : 'bg-white/5 hover:bg-white/10'
+                  isActive(link.path) ? 'bg-white text-[#111827]' : 'bg-white/10 hover:bg-white/20'
                 )}
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <Button onClick={() => setIsOpen(false)}>
-              New Entry
-            </Button>
           </div>
         </div>
       )}

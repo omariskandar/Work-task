@@ -4,7 +4,7 @@ const Label = ({ className, children, ...props }) => {
   return (
     <label
       className={cn(
-        'text-sm font-medium text-white/80 tracking-tight',
+        'section-title px-2 mb-3',
         className
       )}
       {...props}

@@ -11,8 +11,7 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <div className="relative flex min-h-screen flex-col bg-transparent text-white">
-        <div className="noise" aria-hidden="true" />
+      <div className="relative flex min-h-screen flex-col bg-[var(--color-background)] text-[var(--color-text)]">
         <Navbar />
         <main className="flex-1">
           <AnimatedRoutes />
@@ -23,24 +22,24 @@ function App() {
           toastOptions={{
             duration: 3000,
             style: {
-              background: '#0f172a',
-              color: '#fff',
-              borderRadius: '999px',
+              background: '#111827',
+              color: '#FFFFFF',
+              borderRadius: '8px',
               padding: '12px 16px',
-              border: '1px solid rgba(255,255,255,0.12)'
+              border: '1px solid #1f2937'
             },
             success: {
               duration: 3000,
               iconTheme: {
-                primary: '#22d3ee',
-                secondary: '#030712'
+                primary: '#22C55E',
+                secondary: '#FFFFFF'
               }
             },
             error: {
               duration: 4000,
               iconTheme: {
-                primary: '#f472b6',
-                secondary: '#030712'
+                primary: '#DC2626',
+                secondary: '#FFFFFF'
               }
             }
           }}
