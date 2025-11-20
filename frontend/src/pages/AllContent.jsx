@@ -78,7 +78,7 @@ const AllContent = () => {
               <Badge>Dashboard</Badge>
               <div>
                 <h1 className="text-3xl font-semibold text-[#111827]">
-                  Content Command Center
+                  Content Manager
                 </h1>
                 <p className="mt-2 max-w-2xl text-base text-[#374151]">
                   Create, edit, and publish your knowledge base with clarity.

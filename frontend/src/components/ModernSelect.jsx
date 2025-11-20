@@ -13,11 +13,14 @@ const ModernSelect = ({
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
   const [dropdownRect, setDropdownRect] = useState(null);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!containerRef.current) return;
-      if (!containerRef.current.contains(event.target)) {
+      const clickedInsideTrigger = containerRef.current.contains(event.target);
+      const clickedInsideDropdown = dropdownRef.current?.contains(event.target);
+      if (!clickedInsideTrigger && !clickedInsideDropdown) {
         setOpen(false);
       }
     };
@@ -83,6 +86,7 @@ const ModernSelect = ({
         dropdownRect &&
         createPortal(
           <div
+            ref={dropdownRef}
             className="fixed z-[9999] space-y-1 rounded-lg border border-[#E5E7EB] bg-white p-2 shadow-lg"
             style={{
               top: dropdownRect.top,

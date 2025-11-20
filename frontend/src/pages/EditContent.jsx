@@ -180,12 +180,15 @@ const EditContent = () => {
                     <ModernSelect
                       value={formData.type}
                       options={contentTypeOptions}
-                      onChange={(type) =>
+                      onChange={(type) => {
                         setFormData((prev) => ({
                           ...prev,
                           type
-                        }))
-                      }
+                        }));
+                        if (errors.type) {
+                          setErrors((prev) => ({ ...prev, type: '' }));
+                        }
+                      }}
                       placeholder="Select type"
                     />
                     {errors.type && (
